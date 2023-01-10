@@ -4,41 +4,42 @@ var stringSeed = "tristan";
 if(urlParams.has('seed')) {
     stringSeed = urlParams.get('seed');
     console.log(stringSeed);
-} 
+}
+let pixeld = 1;
+
 var stringSeedHash = cyrb128(stringSeed);
 var fxrand = sfc32(...stringSeedHash);
 let callpreviewtimer;
-let colorsarray  = [ 
-  [["1"] , ["2b2d42","8d99ae","ef233c","d90429"]],
-  [["2"] , ["0A3A4A","196674","33A6B2","9AC836"]],
-  [["3"] , ["91D9CC","F2C48D","593520"]],
-  [["4"] , ["F24968","D984A3","BDDEF2","DCEAF2","A61212"]],
-  [["5"] , ["BAD9D9","7BA692","344023","AFBF34"]],
-  [["6"] , ["A62940","D90B42","591E3A","D8D9C5","D98484"]],
-  [["7"] , ["F2C438","F27B13","D9C7B8","8C6C5A","F26D3D"]],
-  [["8"] , ["F20544","8C2656","3F618C","012340","011826"]],
-  [["9"] , ["BF567D","8C4D70","435C73","6FA8BF","539DA6"]],
-  [["10"] , ["F2711B","B7C093","97A275"]],
-  [["11"] , ["593E40","F2D5C4","F2785C","F2594B","A66F6F"]],
-  [["12"] , ["D8E3CF","F0A36F","C5557B","4F2C62"]],
-  [["13"] , ["1C2747","EC6508","1375BB","E9483B","D8DDE5"]],
-  [["14"] , ["8C2354","F2CB05","F29F05","F27405"]],
-  [["15"] , ["64C5F5","2484BF","4DA60D","2A5908"]],
-  [["16"] , ["04ADBF","04BFBF","025959","A0A603"]],
-  [["17"] , ["5B98A6","026873","32D9D9","0D0D0D"]],
-  [["18"] , ["26261C","595843","A6A485","0D0D0D"]],
-  [["19"] , ["3D5A73","4F6F8C","F2E2CE","F24130","8C0303"]],
-  [["20"] , ["111440","144E73","1F80A6","469CA6","F2F2F2"]],
-  [["21"] , ["26261C","595843","A6A485","0D0D0D"]],
-  [["22"] , ["4C291E","FFB632","D2430C","872018"]],
-  [["23"] , ["8AB0BF","61888C","17261E","3B593F","467339"]],
-  [["24"] , ["592040","733462","2A708C","50ABBF","0D0D0D"]],
+let colorsarray  = [
+    [["1"] , ["2b2d42","8d99ae","ef233c","d90429"]],
+    [["2"] , ["0A3A4A","196674","33A6B2","9AC836"]],
+    [["3"] , ["91D9CC","F2C48D","593520"]],
+    [["4"] , ["F24968","D984A3","BDDEF2","DCEAF2","A61212"]],
+    [["5"] , ["BAD9D9","7BA692","344023","AFBF34"]],
+    [["6"] , ["A62940","D90B42","591E3A","D8D9C5","D98484"]],
+    [["7"] , ["F2C438","F27B13","D9C7B8","8C6C5A","F26D3D"]],
+    [["8"] , ["F20544","8C2656","3F618C","012340","011826"]],
+    [["9"] , ["BF567D","8C4D70","435C73","6FA8BF","539DA6"]],
+    [["10"] , ["F2711B","B7C093","97A275"]],
+    [["11"] , ["593E40","F2D5C4","F2785C","F2594B","A66F6F"]],
+    [["12"] , ["D8E3CF","F0A36F","C5557B","4F2C62"]],
+    [["13"] , ["1C2747","EC6508","1375BB","E9483B","D8DDE5"]],
+    [["14"] , ["8C2354","F2CB05","F29F05","F27405"]],
+    [["15"] , ["64C5F5","2484BF","4DA60D","2A5908"]],
+    [["16"] , ["04ADBF","04BFBF","025959","A0A603"]],
+    [["17"] , ["5B98A6","026873","32D9D9","0D0D0D"]],
+    [["18"] , ["26261C","595843","A6A485","0D0D0D"]],
+    [["19"] , ["3D5A73","4F6F8C","F2E2CE","F24130","8C0303"]],
+    [["20"] , ["111440","144E73","1F80A6","469CA6","F2F2F2"]],
+    [["21"] , ["26261C","595843","A6A485","0D0D0D"]],
+    [["22"] , ["4C291E","FFB632","D2430C","872018"]],
+    [["23"] , ["8AB0BF","61888C","17261E","3B593F","467339"]],
+    [["24"] , ["592040","733462","2A708C","50ABBF","0D0D0D"]],
 ]
 let colorarray = randomarray(colorsarray);
 let colors = colorarray[1];
 let colorsshuffle = shufflearr(colors);
 let pointarray = [];
-let pixeld = 1;
 let bgc ;
 let _noiseCounter = 9999;
 let _noiseFloor = 0.1;
@@ -51,7 +52,7 @@ let _maxLen = rndint(_singleWidth*1.5, _singleWidth*4);
 let _numColors = rndint(5, 15);
 let colorsgrid = chroma.scale([colorsshuffle[0], colorsshuffle[1]]).mode('lch').colors(_numColors);
 if(fxrand() > 0.95 ) {
-  colorsgrid = chroma.scale([colorsshuffle[0], colorsshuffle[0]]).mode('lch').colors(_numColors);
+    colorsgrid = chroma.scale([colorsshuffle[0], colorsshuffle[0]]).mode('lch').colors(_numColors);
 }
 let positiverand = rndint(1, 25);
 let _noiseAmplitude = rndint(30, 200);
@@ -62,13 +63,13 @@ let border;
 let unique_contour_values;
 let n_rendered_points;
 function preload() {
-/*     Ensure the .ttf or .otf font stored in the assets directory
-    is loaded before setup() and draw() are called */
+    /*     Ensure the .ttf or .otf font stored in the assets directory
+        is loaded before setup() and draw() are called */
     font = loadFont('libraries/Despairs-X3Wxo.ttf');
-    const window_width  = window.innerWidth || document.documentElement.clientWidth || 
-    document.body.clientWidth;
-    const window_height = window.innerHeight|| document.documentElement.clientHeight|| 
-    document.body.clientHeight;
+    const window_width  = window.innerWidth || document.documentElement.clientWidth ||
+        document.body.clientWidth;
+    const window_height = window.innerHeight|| document.documentElement.clientHeight||
+        document.body.clientHeight;
 
     // console.log(window_width, window_height);
     // if (window_width < _width){//we need to use the height to scale the pixel density
@@ -78,14 +79,17 @@ function preload() {
     // }
 }
 function setup(){
+    colorMode(HSB, 360, 100, 100, 100)
+    if(urlParams.has('density')) {
+        let pixetemp = int(urlParams.get('density'))
+        if(pixetemp > 0 && pixetemp <= 4) {
+        pixeld = pixetemp
+        console.log("pixelDensity: " + pixeld)
+        }
+    }  
     //setup text things
     textFont(font);
     textSize(_fontSize);
-
-    //setup coloring and render settings
-    drawcanvas = createCanvas(_width, _height);
-    drawcanvas.parent("fulllscreen");
-    colorMode(HSB, 360, 100, 100, 100)
     pixelDensity(pixeld);
     angleMode(DEGREES);
     noLoop()
@@ -94,6 +98,10 @@ function setup(){
     //seed noise
     seed = int(fxrand()*9999999);
     noiseSeed(seed);
+    //setup coloring and render settings
+    drawcanvas = createCanvas(_width, _height);
+    drawcanvas.parent("fulllscreen");
+
     //render beautiful background
     background('#f3f3e7');
     bgc =  chroma("#" + colorsshuffle[0]).darken(1).alpha(0.03).hex();
@@ -118,14 +126,14 @@ function setup(){
             posy.push((j*_singleHeight) + (noise(i*_noisePos, j*_noisePos)*_noiseAmplitude) + rndint(-positiverand, positiverand));
         }
     }
-    
-    /*  now that we have random noise generated on a grid, we see how many 
+
+    /*  now that we have random noise generated on a grid, we see how many
         contours that gives us
         We flatten the 2D array to get the min and max values easily */
     let noiseColor_min = noiseColor.reduce(function (p, c){return p.concat(c);}).min();
     let noiseColor_max = noiseColor.reduce(function (p, c){return p.concat(c);}).max();
     // console.log(noiseColor_min,noiseColor_max);
-    //now we rescale the noisevalues to discrete steps to identify the number of contours 
+    //now we rescale the noisevalues to discrete steps to identify the number of contours
     //to place
     let noiseContours = [];
     for (let i=0;i<_numX;i++){
@@ -139,7 +147,7 @@ function setup(){
     // console.log(_numColors);
     // let unique_color_indices = noiseColor.reduce(function(p,c){return p.concat(c);}).filter(onlyUnique);
     // console.log(unique_color_indices);
-    // we now need to get an estimate the volume of each contour to then adjust 
+    // we now need to get an estimate the volume of each contour to then adjust
     // the number of points populated such that each contour has roughly uniform density
     // start with enforcing uniform density, then maybe can scale based on volume, etc
     unique_contour_values = noiseContours.reduce(function(p,c){return p.concat(c);}).filter(onlyUnique);
@@ -147,12 +155,12 @@ function setup(){
         function (count, currentValue) {
             return (count[currentValue] ? ++count[currentValue] : (count[currentValue] = 1), count);
         },{}); //dictionary not array!
-    
+
     /*up to now on a 2D grid, we have generated integer level sets of contours
     and the colors associated with that portion of the grid
     now we need to go through each integer level set, generate random points across the canvas,
     if the point is in the given level set, add it with the nearest color value. Easy, right?*/
-    
+
     let xstart = (_width-posx.max()-posx.min())/2
     let ystart = (_height-posy.max()-posy.min())/2
     // console.log(unique_contour_values);
@@ -175,7 +183,7 @@ function setup(){
             // console.log(noiseContours[itx][ity]);
             // console.log(,noiseContours[0].length);
             if (
-                noiseContours[itx][ity] == contour_val 
+                noiseContours[itx][ity] == contour_val
                 && inBounds(tx,ty,posx,posy)
             ){
                 let colorindex = noiseColor[itx][ity];
@@ -194,7 +202,7 @@ function setup(){
 //         PosRandom:String(posrand),
 //    }
 //    console.table(randomvariables);
- 
+
 //    window.$fxhashFeatures = {
 //         "Base Colors": String(colors),
 //         "Single Distance":String(singlew),
@@ -204,7 +212,7 @@ function setup(){
 //         "Pos Random":String(posrand),
 //    }
 //     /* so now we should have n_rendered*unique_contour_values.length points
-//     randomly generated and organized in a 2D array (pointarray), with 
+//     randomly generated and organized in a 2D array (pointarray), with
 //     first dimension iterating over the number of contours, and the second
 //     over the randomly generated points. Its elements are objects containing
 //     their position on the screen, the contour they belong to, and their color*/
@@ -236,14 +244,14 @@ function draw(){
     pop();
     const loadingdiv = document.getElementById('loadingd')
     loadingdiv.remove();
-    callpreviewtimer = setTimeout(callpreview, 1000); 
+    callpreviewtimer = setTimeout(callpreview, 1000);
 }
 
 function callpreview() {
     clearTimeout(callpreviewtimer);
     console.log("done")
     fxpreview()
-  }
+}
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
@@ -336,4 +344,11 @@ function cyrb128(str) {
     h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
     h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
     return [(h1^h2^h3^h4)>>>0, (h2^h1)>>>0, (h3^h1)>>>0, (h4^h1)>>>0];
+}
+
+function exportPNG() {
+    saveCanvas(stringSeed, "png");
+}
+function keyReleased() {
+    if (key == 's' || key == 'S' || key == 'e' || key == 'E') exportPNG();
 }
