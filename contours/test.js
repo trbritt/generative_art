@@ -144,10 +144,10 @@ function setup(){
     let xstart = (_width-posx.max()-posx.min())/2
     let ystart = (_height-posy.max()-posy.min())/2
     // console.log(unique_contour_values);
-    let ideal_density = 2.5; //test case emma: largest contour is ~530 pixels, so we want ~2000points, giving density of 3.7 point/pixel
+    let ideal_density = 3.2*(12/unique_contour_values.length); //test case emma: largest contour is ~530 pixels, so we want ~2000points, giving density of 3.7 point/pixel
     n_rendered_points = [];
     for (idn=0;idn<unique_contour_values.length;idn++){
-        console.log('Working on ' + idn + '/' + unique_contour_values.length + ' contours');
+        console.log('Generating contour ' + idn + '/' + unique_contour_values.length);
         let contour_val = unique_contour_values[idn];
         let accumulator = 0;
         let n_rendered = Math.floor(ideal_density*contour_volumes[contour_val]); //total number of points to render for each contour
@@ -191,7 +191,7 @@ function draw(){
         if (accumulator == n_rendered_points[contour]){
             accumulator = 0;
             contour++;
-            console.log('working on '+contour+'/'+unique_contour_values.length+' contours');
+            console.log('Rendering contour '+contour+'/'+unique_contour_values.length);
         }
         if (pointarray[idp].vec.y < y_min){y_min = pointarray[idp].vec.y;id_y_min=idp;}
         pointarray[idp].createConnections(pointarray);
@@ -201,8 +201,9 @@ function draw(){
     push();
     let write_col = chroma(colorsgrid[pointarray[id_y_min].colorindex]).alpha(rndint(5, 8)/10).hex();
     fill(write_col);
-    textAlign(CENTER, TOP);
-    text(stringSeed.split("").join(" "), width/2,25);
+    textAlign(CENTER, CENTER);
+    console.log(pointarray[id_y_min].vec.y);
+    text(stringSeed.split("").join(" "), width/2,min(95,pointarray[id_y_min].vec.y));
     pop();
     const loadingdiv = document.getElementById('loading');
     loadingdiv.remove();
