@@ -13,16 +13,7 @@ body {
     background: #030209;
     overflow: hidden;
 }
-#loading {
-    background: url('libraries/loading.gif') no-repeat center center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 9999999;
-}
-/* 
+
 #fulllscreen {
     position: fixed;
     top: 0;
@@ -56,4 +47,4 @@ body {
 .loadingdiv img {
     width: 300px;
     height: 300px;
-} */
+}
