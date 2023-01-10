@@ -65,6 +65,17 @@ function preload() {
 /*     Ensure the .ttf or .otf font stored in the assets directory
     is loaded before setup() and draw() are called */
     font = loadFont('libraries/Despairs-X3Wxo.ttf');
+    const window_width  = window.innerWidth || document.documentElement.clientWidth || 
+    document.body.clientWidth;
+    const window_height = window.innerHeight|| document.documentElement.clientHeight|| 
+    document.body.clientHeight;
+
+    // console.log(window_width, window_height);
+    // if (window_width < _width){//we need to use the height to scale the pixel density
+    //     pixeld /= window_width/_width;
+    // } else if (window_height < _height ){
+    //     pixeld /= window_height/_height;
+    // }
 }
 function setup(){
     //setup text things
@@ -72,7 +83,8 @@ function setup(){
     textSize(_fontSize);
 
     //setup coloring and render settings
-    createCanvas(_width, _height);
+    drawcanvas = createCanvas(_width, _height);
+    drawcanvas.parent("fulllscreen");
     colorMode(HSB, 360, 100, 100, 100)
     pixelDensity(pixeld);
     angleMode(DEGREES);
@@ -173,7 +185,24 @@ function setup(){
         }
     }
     console.log('Generated points');
-
+//     var randomvariables = {
+//         BaseColors:String(colors),
+//         SingleDistance:String(singlew),
+//         Grid:String(aantalw + " x " + aantalh),
+//         SpaceStart:String(spacestart),
+//         SpaceBetween:String(spacebetween),
+//         PosRandom:String(posrand),
+//    }
+//    console.table(randomvariables);
+ 
+//    window.$fxhashFeatures = {
+//         "Base Colors": String(colors),
+//         "Single Distance":String(singlew),
+//         "Grid":String(aantalw + " x " + aantalh),
+//         "Space Start":String(spacestart),
+//         "Space Between":String(spacebetween),
+//         "Pos Random":String(posrand),
+//    }
 //     /* so now we should have n_rendered*unique_contour_values.length points
 //     randomly generated and organized in a 2D array (pointarray), with 
 //     first dimension iterating over the number of contours, and the second
@@ -205,19 +234,15 @@ function draw(){
     console.log(pointarray[id_y_min].vec.y);
     text(stringSeed.split("").join(" "), width/2,min(95,pointarray[id_y_min].vec.y));
     pop();
-    const loadingdiv = document.getElementById('loading');
+    const loadingdiv = document.getElementById('loadingd')
     loadingdiv.remove();
-    callpreviewtimer = setTimeout(callpreview, 20*1000); 
+    callpreviewtimer = setTimeout(callpreview, 1000); 
 }
-function keyPressed(){
-    if (keyCode===69){
-        save(stringSeed + '.png');
-    }
-}
+
 function callpreview() {
     clearTimeout(callpreviewtimer);
-    console.log("done");
-    fxpreview();
+    console.log("done")
+    fxpreview()
   }
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
