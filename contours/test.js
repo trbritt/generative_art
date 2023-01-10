@@ -3,10 +3,9 @@ const urlParams = new URLSearchParams(queryString);
 var stringSeed = "tristan";
 if(urlParams.has('seed')) {
     stringSeed = urlParams.get('seed');
-    console.log(stringSeed);
+    console.log('Using seed: ' + stringSeed);
 }
 let pixeld = 1;
-
 var stringSeedHash = cyrb128(stringSeed);
 var fxrand = sfc32(...stringSeedHash);
 let callpreviewtimer;
@@ -239,7 +238,6 @@ function draw(){
     let write_col = chroma(colorsgrid[pointarray[id_y_min].colorindex]).alpha(rndint(5, 8)/10).hex();
     fill(write_col);
     textAlign(CENTER, CENTER);
-    console.log(pointarray[id_y_min].vec.y);
     text(stringSeed.split("").join(" "), width/2,min(95,pointarray[id_y_min].vec.y));
     pop();
     const loadingdiv = document.getElementById('loadingd')
